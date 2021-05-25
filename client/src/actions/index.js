@@ -24,7 +24,7 @@ export const fetchNewFlix = (country) => async (dispatch) => {
     method: "GET",
     url: "https://unogs-unogs-v1.p.rapidapi.com/aaapi.cgi",
     headers: {
-      "x-rapidapi-key": "4a02da76b1msh7288767abeb74e9p1b431bjsnff758910e2a3",
+      "x-rapidapi-key": `${process.env.REACT_APP_UNOGS_API_KEY}`,
       "x-rapidapi-host": "unogs-unogs-v1.p.rapidapi.com",
     },
     params: {

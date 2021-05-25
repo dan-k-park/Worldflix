@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
 import FlixContainer from '../../containers/FlixContainer';
@@ -9,7 +9,7 @@ const Home = ({ name, code, newFlix, fetchNewFlix }) => {
   useEffect(() => {
       fetchNewFlix(code);
     // The array is called the dependency array which contains the values the effect depends on
-  },[name])
+  },[])
 
 
   return (

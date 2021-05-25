@@ -8,7 +8,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { useStyles } from "./styles";
 
-export default function ImgMediaCard() {
+const FlixCard = ( img, title, synopsis ) => {
   const classes = useStyles();
 
   return (
@@ -16,18 +16,17 @@ export default function ImgMediaCard() {
       <CardActionArea>
         <CardMedia
           component="img"
-          alt="Contemplative Reptile"
+          alt="Film or show image"
           height="140"
           image="/static/images/cards/contemplative-reptile.jpg"
           title="Contemplative Reptile"
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
-            Lizard
+            {title}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-            Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-            across all continents except Antarctica
+            {synopsis}
           </Typography>
         </CardContent>
       </CardActionArea>
@@ -42,3 +41,5 @@ export default function ImgMediaCard() {
     </Card>
   );
 }
+
+export default FlixCard;
