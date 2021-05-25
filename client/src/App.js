@@ -9,10 +9,8 @@ import { CssBaseline } from "@material-ui/core";
 class App extends Component {
 
   componentDidMount() {
-    // see export statement to see why fetchUser is available as props
     this.props.fetchUser();
     this.props.getGeoInfo();
-    this.props.fetchNewFlix();
   }
 
   render() {

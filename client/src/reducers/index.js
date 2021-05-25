@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
 import authReducer from './authReducer';
-import locationReducer from './locationReducer';
+import countryReducer from './countryReducer';
 import flixReducer from './flixReducer';
 
 export default combineReducers({
   auth: authReducer,
-  location: locationReducer,
+  country: countryReducer,
   flix: flixReducer
 })

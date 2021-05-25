@@ -4,11 +4,17 @@ import * as actions from '../../actions';
 import FlixContainer from '../../containers/FlixContainer';
 
 
-const Home = ({ country_name, newFlix }) => {
+const Home = ({ name, code, newFlix, fetchNewFlix }) => {
+
+  useEffect(() => {
+      fetchNewFlix(code);
+    // The array is called the dependency array which contains the values the effect depends on
+  },[name])
+
 
   return (
     <div>
-      New Titles in {country_name}
+      New Titles in {name}
       <FlixContainer flix={newFlix}/>
     </div>
   )
@@ -16,7 +22,8 @@ const Home = ({ country_name, newFlix }) => {
 
 function mapStateToProps(state) {
   return { 
-    country_name: state.location.country_name,
+    code: state.country.code,
+    name: state.country.name,
     newFlix: state.flix.newFlix 
   };
 }

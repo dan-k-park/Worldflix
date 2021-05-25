@@ -14,11 +14,12 @@ export const getGeoInfo = () => async (dispatch) => {
   const res = await axios.get("https://ipapi.co/json/");
   dispatch({
     type: FETCH_LOCATION,
-    payload: { country_code: res.data.country, country_name: res.data.country_name },
+    payload: { code: res.data.country, name: res.data.country_name },
   });
 };
 
-export const fetchNewFlix = () => async (dispatch) => {
+export const fetchNewFlix = (country) => async (dispatch) => {
+  console.log(country)
   const newFlix = await axios({
     method: "GET",
     url: "https://unogs-unogs-v1.p.rapidapi.com/aaapi.cgi",
@@ -27,7 +28,7 @@ export const fetchNewFlix = () => async (dispatch) => {
       "x-rapidapi-host": "unogs-unogs-v1.p.rapidapi.com",
     },
     params: {
-      q: "get:new7:US",
+      q: `get:new7:${country}`,
       p: "1",
       t: "ns",
       st: "adv",
