@@ -1,18 +1,24 @@
-import React from 'react'
+import React, { useEffect, useState } from "react";
 import { connect } from 'react-redux';
+import * as actions from '../../actions';
+import FlixContainer from '../../containers/FlixContainer';
 
-const Home = ({ country_name }) => {
+
+const Home = ({ country_name, newFlix }) => {
+
   return (
     <div>
-      Top Titles in the {country_name}
+      New Titles in {country_name}
+      <FlixContainer flix={newFlix}/>
     </div>
   )
 }
 
-function mapStateToProps({location}) {
+function mapStateToProps(state) {
   return { 
-    country_name: location.country_name 
+    country_name: state.location.country_name,
+    newFlix: state.flix.newFlix 
   };
 }
 
-export default connect(mapStateToProps)(Home);
+export default connect(mapStateToProps, actions)(Home);

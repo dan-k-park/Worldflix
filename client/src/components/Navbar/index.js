@@ -15,8 +15,6 @@ import ExploreIcon from "@material-ui/icons/Explore";
 import { useStyles } from "./styles";
 
 const navLinks = [
-  { title: `Home`, path: `/` },
-  { title: `Trips`, path: `/trips` },
   { title: `Log In`, path: `/login` },
 ];
 

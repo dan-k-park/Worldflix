@@ -12,6 +12,7 @@ class App extends Component {
     // see export statement to see why fetchUser is available as props
     this.props.fetchUser();
     this.props.getGeoInfo();
+    this.props.fetchNewFlix();
   }
 
   render() {
