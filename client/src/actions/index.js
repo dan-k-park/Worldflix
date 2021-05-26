@@ -1,6 +1,11 @@
 // Action creator file
 import axios from "axios"; // used to make ajax requests
-import { FETCH_USER, FETCH_LOCATION, FETCH_NEW_FLIX } from "./types";
+import {
+  FETCH_USER,
+  FETCH_LOCATION,
+  FETCH_NEW_FLIX,
+  FETCH_FLIX_INFO,
+} from "./types";
 
 // Redux thunk inspects the value returned by this action creator
 // If redux thunk sees a function being returned, it will call it and pass in the dispatch function as an argument
@@ -19,7 +24,6 @@ export const getGeoInfo = () => async (dispatch) => {
 };
 
 export const fetchNewFlix = (country) => async (dispatch) => {
-  console.log(country)
   const newFlix = await axios({
     method: "GET",
     url: "https://unogs-unogs-v1.p.rapidapi.com/aaapi.cgi",
@@ -33,12 +37,27 @@ export const fetchNewFlix = (country) => async (dispatch) => {
       t: "ns",
       st: "adv",
     },
-  }).then(res => res['data']['ITEMS'].slice(0,12))
-
+  }).then((res) => res["data"]["ITEMS"].slice(0, 12));
 
   dispatch({ type: FETCH_NEW_FLIX, payload: newFlix });
 };
 
+export const fetchFlixInfo = (netflixid) => async (dispatch) => {
+  const flixInfo = await axios({
+    method: "GET",
+    url: "https://unogs-unogs-v1.p.rapidapi.com/aaapi.cgi",
+    headers: {
+      "x-rapidapi-key": `${process.env.REACT_APP_UNOGS_API_KEY}`,
+      "x-rapidapi-host": "unogs-unogs-v1.p.rapidapi.com",
+    },
+    params: {
+      q: `${netflixid}`,
+      t: "loadvideo",
+    },
+  }).then((res) => console.log(res));
+
+  dispatch({ type: FETCH_FLIX_INFO, payload: flixInfo });
+};
 // export const submitLogin = (values, history) => async dispatch => {
 //   const res = await axios.post('/api/surveys', values);
 

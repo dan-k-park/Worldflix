@@ -21,7 +21,7 @@ class App extends Component {
         <CssBaseline />
         <Navbar />
         <Route exact path='/' component={Home} />
-        <Route exact path='/flix/:id' render={props => <Flix {...props} />} />
+        <Route exact path='/flix/:id' render={routerProps => <Flix {...routerProps} />} />
       </Router>
     );
   }

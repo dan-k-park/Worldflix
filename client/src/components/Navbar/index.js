@@ -1,6 +1,6 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import SideDrawer from "../SideDrawer";
-
 import {
   AppBar,
   Container,
@@ -27,7 +27,7 @@ const Navbar = () => {
     <AppBar position="static">
       <Toolbar>
         <Container maxWidth="xl" className={classes.navbarDisplayFlex}>
-          <IconButton edge="start" color="inherit" aria-label="home">
+          <IconButton edge="start" color="inherit" aria-label="home" component={Link} to='/' >
             <TheatersIcon fontSize="large" />
           </IconButton>
           <Hidden smDown>

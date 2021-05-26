@@ -1,9 +1,15 @@
-import React from 'react'
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import * as actions from '../../actions';
 import Paper from '@material-ui/core/Paper';
 import { useStyles } from "./styles";
 
-const Flix = ({}) => {
+const Flix = ({ match, flix, fetchFlixInfo }) => {
   const classes = useStyles();
+
+  useEffect(() => {
+    fetchFlixInfo(match['params']['id'])
+  }, [])
 
   return (
     <Paper className={classes.root}>
@@ -15,4 +21,10 @@ const Flix = ({}) => {
   )
 }
 
-export default Flix
+function mapStateToProps({ flix }) {
+  return {
+    flix: flix['flixInfo']
+  }
+}
+
+export default connect(mapStateToProps, actions)(Flix)
