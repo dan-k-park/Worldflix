@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import * as actions from './actions';
 import Navbar from "./components/Navbar";
 import Home from './pages/Home';
+import Flix from './pages/Flix';
 import { CssBaseline } from "@material-ui/core";
 
 class App extends Component {
@@ -20,6 +21,7 @@ class App extends Component {
         <CssBaseline />
         <Navbar />
         <Route exact path='/' component={Home} />
+        <Route exact path='/flix/:id' render={props => <Flix {...props} />} />
       </Router>
     );
   }
