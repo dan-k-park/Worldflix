@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import getUnicodeFlagIcon from 'country-flag-icons/unicode'
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
 import Paper from '@material-ui/core/Paper';
@@ -9,13 +10,26 @@ const Flix = ({ match, flix, fetchFlixInfo }) => {
 
   useEffect(() => {
     fetchFlixInfo(match['params']['id'])
-  }, [])
+  }, [match])
+
+  const getCountryFlags = () => flix['country'].map(country => {
+      return getUnicodeFlagIcon(country['ccode'].toUpperCase())
+    })
+
+  const test = () => {
+    console.log(flix)
+  }
 
   return (
     <Paper className={classes.root}>
       <div className={classes.paperContent}>
-        <h1>Image</h1>
-        <h1>stuff</h1>
+        <img src={flix['nfinfo']['image1']} />
+        <div>
+        <h1>{flix['nfinfo']['title']}</h1>
+        <p>{flix['nfinfo']['synopsis']}</p>
+        </div>
+        {getCountryFlags()}
+        {test()}
       </div>
     </Paper>
   )

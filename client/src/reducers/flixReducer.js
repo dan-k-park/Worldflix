@@ -2,7 +2,7 @@ import { FETCH_NEW_FLIX, FETCH_FLIX_INFO } from '../actions/types';
 
 const initalState = {
   newFlix: [],
-  flixInfo: null,
+  flixInfo: {},
   similarResults: []
 }
 

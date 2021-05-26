@@ -54,7 +54,7 @@ export const fetchFlixInfo = (netflixid) => async (dispatch) => {
       q: `${netflixid}`,
       t: "loadvideo",
     },
-  }).then((res) => console.log(res));
+  }).then((res) => res["data"]["RESULT"]);
 
   dispatch({ type: FETCH_FLIX_INFO, payload: flixInfo });
 };
