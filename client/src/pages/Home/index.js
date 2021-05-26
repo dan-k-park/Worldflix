@@ -9,13 +9,13 @@ const Home = ({ name, code, newFlix, fetchNewFlix }) => {
   useEffect(() => {
       fetchNewFlix(code);
     // The array is called the dependency array which contains the values the effect depends on
-  },[])
+  },[name])
 
 
   return (
     <div>
       New Titles in {name}
-      <FlixContainer flix={newFlix}/>
+        <FlixContainer flix={newFlix}/> 
     </div>
   )
 }

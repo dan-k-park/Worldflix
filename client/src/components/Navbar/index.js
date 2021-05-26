@@ -7,11 +7,13 @@ import {
   Toolbar,
   Hidden,
   IconButton,
+  InputBase,
   List,
   ListItem,
   ListItemText,
 } from "@material-ui/core";
-import ExploreIcon from "@material-ui/icons/Explore";
+import SearchIcon from '@material-ui/icons/Search';
+import TheatersIcon from '@material-ui/icons/Theaters';
 import { useStyles } from "./styles";
 
 const navLinks = [
@@ -26,7 +28,7 @@ const Navbar = () => {
       <Toolbar>
         <Container maxWidth="xl" className={classes.navbarDisplayFlex}>
           <IconButton edge="start" color="inherit" aria-label="home">
-            <ExploreIcon fontSize="large" />
+            <TheatersIcon fontSize="large" />
           </IconButton>
           <Hidden smDown>
             <List
@@ -34,6 +36,19 @@ const Navbar = () => {
               aria-labelledby="main navigation"
               className={classes.navDisplayFlex}
             >
+              <div className={classes.search}>
+            <div className={classes.searchIcon}>
+              <SearchIcon />
+            </div>
+            <InputBase
+              placeholder="Search…"
+              classes={{
+                root: classes.inputRoot,
+                input: classes.inputInput,
+              }}
+              inputProps={{ 'aria-label': 'search' }}
+            />
+          </div>
               {navLinks.map(({ title, path }) => (
                 <a href={path} key={title} className={classes.linkText}>
                   <ListItem button>

@@ -33,7 +33,7 @@ export const fetchNewFlix = (country) => async (dispatch) => {
       t: "ns",
       st: "adv",
     },
-  }).then(res => res['data']['ITEMS'])
+  }).then(res => res['data']['ITEMS'].slice(0,12))
 
 
   dispatch({ type: FETCH_NEW_FLIX, payload: newFlix });
