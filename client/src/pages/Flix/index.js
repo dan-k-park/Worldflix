@@ -1,44 +1,51 @@
-import React, { useEffect } from 'react';
-import getUnicodeFlagIcon from 'country-flag-icons/unicode'
-import { connect } from 'react-redux';
-import * as actions from '../../actions';
-import Paper from '@material-ui/core/Paper';
+import React, { useState, useEffect } from "react";
+import getUnicodeFlagIcon from "country-flag-icons/unicode";
+import { connect } from "react-redux";
+import * as actions from "../../actions";
+import Paper from "@material-ui/core/Paper";
 import { useStyles } from "./styles";
 
 const Flix = ({ match, flix, fetchFlixInfo }) => {
   const classes = useStyles();
 
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
-    fetchFlixInfo(match['params']['id'])
-  }, [match])
+    fetchFlixInfo(match["params"]["id"]);
+    setLoading(false) 
 
-  const getCountryFlags = () => flix['country'].map(country => {
-      return getUnicodeFlagIcon(country['ccode'].toUpperCase())
-    })
+    return () => {
+      setLoading(true)
+    }
+  }, [match]);
 
-  const test = () => {
-    console.log(flix)
-  }
+  const getCountryFlags = () =>
+    flix["country"].map((country) => {
+      return getUnicodeFlagIcon(country["ccode"].toUpperCase());
+    });
 
   return (
-    <Paper className={classes.root}>
-      <div className={classes.paperContent}>
-        <img src={flix['nfinfo']['image1']} />
-        <div>
-        <h1>{flix['nfinfo']['title']}</h1>
-        <p>{flix['nfinfo']['synopsis']}</p>
-        </div>
-        {getCountryFlags()}
-        {test()}
-      </div>
-    </Paper>
-  )
-}
+    <>
+      {loading ? null : (
+        <Paper className={classes.root}>
+          <div className={classes.paperContent}>
+            <img src={flix["nfinfo"]["image1"]} />
+            <div>
+              <h1>{flix["nfinfo"]["title"]}</h1>
+              <p>{flix["nfinfo"]["synopsis"]}</p>
+            </div>
+            {getCountryFlags()}
+          </div>
+        </Paper>
+      )}
+    </>
+  );
+};
 
 function mapStateToProps({ flix }) {
   return {
-    flix: flix['flixInfo']
-  }
+    flix: flix["flixInfo"],
+  };
 }
 
-export default connect(mapStateToProps, actions)(Flix)
+export default connect(mapStateToProps, actions)(Flix);
