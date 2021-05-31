@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";  
 import getUnicodeFlagIcon from "country-flag-icons/unicode";
 import { connect } from "react-redux";
 import * as actions from "../../actions";
@@ -12,11 +13,6 @@ const Flix = ({ match, flix, fetchFlixInfo }) => {
 
   useEffect(() => {
     fetchFlixInfo(match["params"]["id"]);
-    setLoading(false) 
-
-    return () => {
-      setLoading(true)
-    }
   }, [match]);
 
   const getCountryFlags = () =>

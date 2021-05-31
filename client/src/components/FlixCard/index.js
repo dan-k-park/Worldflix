@@ -30,7 +30,6 @@ const FlixCard = ({ id, img, title}) => {
           </Typography>
         </CardContent>
       <CardActions>
-        {/* Eventually change the to= to a path with params for id */}
         <Button size="small" color="primary" component={Link} to={`/flix/${id}`}>
           More Info
         </Button>
