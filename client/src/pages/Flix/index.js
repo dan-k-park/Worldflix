@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";  
 import getUnicodeFlagIcon from "country-flag-icons/unicode";
 import { connect } from "react-redux";
 import * as actions from "../../actions";
@@ -12,18 +11,20 @@ const Flix = ({ match, flix, fetchFlixInfo }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    console.log(loading)
     fetchFlixInfo(match["params"]["id"]);
-  }, [match]);
+    setLoading(false)
+    console.log(loading)
+  }, [loading]);
 
   const getCountryFlags = () =>
     flix["country"].map((country) => {
       return getUnicodeFlagIcon(country["ccode"].toUpperCase());
     });
-
   return (
     <>
-      {loading ? null : (
-        <Paper className={classes.root}>
+      {loading ? null :
+        (<Paper className={classes.root}>
           <div className={classes.paperContent}>
             <img src={flix["nfinfo"]["image1"]} />
             <div>
@@ -32,8 +33,8 @@ const Flix = ({ match, flix, fetchFlixInfo }) => {
             </div>
             {getCountryFlags()}
           </div>
-        </Paper>
-      )}
+        </Paper>)
+      }
     </>
   );
 };

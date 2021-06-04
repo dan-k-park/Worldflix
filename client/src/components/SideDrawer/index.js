@@ -5,6 +5,7 @@ import {
   ListItem,
   ListItemText,
   Drawer,
+  InputBase
 } from "@material-ui/core";
 import { Menu } from "@material-ui/icons";
 import { useStyles } from "./styles";
@@ -56,6 +57,14 @@ const SideDrawer = ({ navLinks }) => {
         onClose={toggleDrawer("right", false)}
       >
         {sideDrawerList("right")}
+        <InputBase
+              placeholder="Search…"
+              classes={{
+                root: classes.inputRoot,
+                input: classes.inputInput,
+              }}
+              inputProps={{ 'aria-label': 'search' }}
+            />
       </Drawer>
     </>
   );

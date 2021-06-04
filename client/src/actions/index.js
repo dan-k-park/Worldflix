@@ -42,6 +42,7 @@ export const fetchNewFlix = (country) => async (dispatch) => {
   dispatch({ type: FETCH_NEW_FLIX, payload: newFlix });
 };
 
+// Figure out why this doesn't work
 export const fetchFlixInfo = (netflixid) => async (dispatch) => {
   const flixInfo = await axios({
     method: "GET",
@@ -54,7 +55,10 @@ export const fetchFlixInfo = (netflixid) => async (dispatch) => {
       q: `${netflixid}`,
       t: "loadvideo",
     },
-  }).then((res) => res["data"]["RESULT"]);
+  }).then((res) => {
+    console.log(res)
+    return res["data"]["RESULT"]
+  });
 
   dispatch({ type: FETCH_FLIX_INFO, payload: flixInfo });
 };
