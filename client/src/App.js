@@ -5,6 +5,7 @@ import * as actions from './actions';
 import Navbar from "./components/Navbar";
 import Home from './pages/Home';
 import Flix from './pages/Flix';
+import SearchResults from './pages/SearchResults';
 import { CssBaseline } from "@material-ui/core";
 
 class App extends Component {
@@ -22,6 +23,7 @@ class App extends Component {
         <Navbar />
         <Route exact path='/' component={Home} />
         <Route exact path='/flix/:id' render={routerProps => <Flix {...routerProps} />} />
+        <Route exact path='/search/?s=:query' render={routerProps => <SearchResults {...routerProps} />} />
       </Router>
     );
   }

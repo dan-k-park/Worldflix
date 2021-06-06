@@ -8,14 +8,9 @@ import { useStyles } from "./styles";
 const Flix = ({ match, flix, fetchFlixInfo }) => {
   const classes = useStyles();
 
-  const [loading, setLoading] = useState(true);
-
   useEffect(() => {
-    console.log(loading)
     fetchFlixInfo(match["params"]["id"]);
-    setLoading(false)
-    console.log(loading)
-  }, [loading]);
+  }, [match, actions.fetchNewFlix]);
 
   const getCountryFlags = () =>
     flix["country"].map((country) => {
@@ -23,18 +18,16 @@ const Flix = ({ match, flix, fetchFlixInfo }) => {
     });
   return (
     <>
-      {loading ? null :
-        (<Paper className={classes.root}>
-          <div className={classes.paperContent}>
-            <img src={flix["nfinfo"]["image1"]} />
-            <div>
-              <h1>{flix["nfinfo"]["title"]}</h1>
-              <p>{flix["nfinfo"]["synopsis"]}</p>
-            </div>
-            {getCountryFlags()}
+      <Paper className={classes.root}>
+        <div className={classes.paperContent}>
+          <img src={flix["nfinfo"]["image1"]} />
+          <div>
+            <h1>{flix["nfinfo"]["title"]}</h1>
+            <p>{flix["nfinfo"]["synopsis"]}</p>
           </div>
-        </Paper>)
-      }
+          {getCountryFlags()}
+        </div>
+      </Paper>
     </>
   );
 };
