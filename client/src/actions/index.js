@@ -55,12 +55,8 @@ export const fetchFlixInfo = (netflixid) => async (dispatch) => {
       q: `${netflixid}`,
       t: "loadvideo",
     },
-  }).then((res) => {
-    console.log(res)
-    return res["data"]["RESULT"]
-  });
-
-  dispatch({ type: FETCH_FLIX_INFO, payload: flixInfo });
+  })
+  dispatch({ type: FETCH_FLIX_INFO, payload: flixInfo["data"]["RESULT"] });
 };
 // export const submitLogin = (values, history) => async dispatch => {
 //   const res = await axios.post('/api/surveys', values);
