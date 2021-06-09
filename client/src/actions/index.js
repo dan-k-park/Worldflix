@@ -5,6 +5,8 @@ import {
   FETCH_LOCATION,
   FETCH_NEW_FLIX,
   FETCH_FLIX_INFO,
+  FETCH_FLIX_ID,
+  FETCH_SEARCH_RESULTS
 } from "./types";
 
 // Redux thunk inspects the value returned by this action creator
@@ -43,7 +45,7 @@ export const fetchNewFlix = (country) => async (dispatch) => {
 };
 
 // Figure out why this doesn't work
-export const fetchFlixInfo = (netflixid) => async (dispatch) => {
+export const fetchFlixInfo = (id) => async (dispatch) => {
   const flixInfo = await axios({
     method: "GET",
     url: "https://unogs-unogs-v1.p.rapidapi.com/aaapi.cgi",
@@ -52,11 +54,28 @@ export const fetchFlixInfo = (netflixid) => async (dispatch) => {
       "x-rapidapi-host": "unogs-unogs-v1.p.rapidapi.com",
     },
     params: {
-      q: `${netflixid}`,
+      q: `${id}`,
       t: "loadvideo",
     },
-  })
+  });
   dispatch({ type: FETCH_FLIX_INFO, payload: flixInfo["data"]["RESULT"] });
+};
+
+export const fetchResults = (title) => async (dispatch) => {
+  let results;
+  try {
+    results = await axios({
+      method: "GET",
+      url: `http://www.omdbapi.com/?apikey=${process.env.REACT_APP_OMDB_API_KEY}&s=twister`,
+    }).then((res) => {
+      console.log(res)
+      return res.data.imdbID;
+    });
+  } catch (err) {
+    console.log(err);
+  }
+
+  dispatch({ type: FETCH_SEARCH_RESULTS, payload: results });
 };
 // export const submitLogin = (values, history) => async dispatch => {
 //   const res = await axios.post('/api/surveys', values);

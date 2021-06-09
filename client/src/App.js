@@ -10,7 +10,7 @@ import { CssBaseline } from "@material-ui/core";
 
 class App extends Component {
   componentDidMount() {
-    this.props.fetchUser();
+    // this.props.fetchUser();
     this.props.getGeoInfo();
   }
 

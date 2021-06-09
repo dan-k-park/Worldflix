@@ -1,19 +1,15 @@
 import React, { useEffect } from 'react';
-import {
-  BrowserRouter as Router,
-  Link,
-  useLocation
-} from "react-router-dom";
+import { connect } from "react-redux";
+import * as actions from "../../actions";
 import FlixContainer from '../../containers/FlixContainer';
 
-function useQuery() {
-  return new URLSearchParams(useLocation().search);
-}
 
-const SearchResults = ({ match, location }) => {
+const SearchResults = ({ match, location, fetchID }) => {
   useEffect(() => {
-    const params = new URLSearchParams(location.search)
-    console.log(params.get('q'))
+    // Remove ?q= query param
+    const title = new URLSearchParams(location.search).get('q')
+    console.log(title)
+    fetchID(title)
   },[])
 
   return (
@@ -23,4 +19,4 @@ const SearchResults = ({ match, location }) => {
   )
 }
 
-export default SearchResults
+export default connect(null, actions)(SearchResults)
