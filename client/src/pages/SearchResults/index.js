@@ -1,22 +1,34 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from "react-redux";
 import * as actions from "../../actions";
 import FlixContainer from '../../containers/FlixContainer';
 
 
-const SearchResults = ({ match, location, fetchID }) => {
+const SearchResults = ({ match, location, fetchFlixInfo, fetchResults, imdbResults }) => {
+
+  const [searchResults, setSearchResults] = useState([])
+
   useEffect(() => {
-    // Remove ?q= query param
     const title = new URLSearchParams(location.search).get('q')
-    console.log(title)
-    fetchID(title)
+    fetchResults(title)
+    imdbResults.forEach(title => {
+      let result = fetchFlixInfo(title.imdbID)
+      setSearchResults([...searchResults, result])
+    })
   },[])
 
   return (
     <div>
-    <h1>The title you searched for is {location.search}</h1>
+    <h1>The title you searched for is {new URLSearchParams(location.search).get('q')}</h1>
+    <FlixContainer flix={searchResults}/>
     </div>
   )
 }
 
-export default connect(null, actions)(SearchResults)
+function mapStateToProps({ flix }) {
+  return {
+    imdbResults: flix.searchResults
+  }
+}
+
+export default connect(mapStateToProps, actions)(SearchResults)

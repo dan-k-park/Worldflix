@@ -62,20 +62,39 @@ export const fetchFlixInfo = (id) => async (dispatch) => {
 };
 
 export const fetchResults = (title) => async (dispatch) => {
-  let results;
+  let imdbResults;
+  let netflixResults;
   try {
-    results = await axios({
+    imdbResults = await axios({
       method: "GET",
-      url: `http://www.omdbapi.com/?apikey=${process.env.REACT_APP_OMDB_API_KEY}&s=twister`,
+      url: `http://www.omdbapi.com/?apikey=${process.env.REACT_APP_OMDB_API_KEY}&s=${title}`,
     }).then((res) => {
-      console.log(res)
-      return res.data.imdbID;
+      console.log(res.data.Search)
+      return res.data.Search;
     });
   } catch (err) {
     console.log(err);
   }
 
-  dispatch({ type: FETCH_SEARCH_RESULTS, payload: results });
+  imdbResults.forEach(result => {
+    axios.get(`https://unogs-unogs-v1.p.rapidapi.com/aaapi.cgi?t=loadvideo&q=${result.imdbID}`,{
+      headers: {
+        "x-rapidapi-key": `${process.env.REACT_APP_UNOGS_API_KEY}`,
+        "x-rapidapi-host": "unogs-unogs-v1.p.rapidapi.com",
+      }
+    })
+    .then(res => {
+      if (res) {
+        console.log(res.data.RESULT.nfinfo)
+        netflixResults.push(res)
+      }
+    })
+    .catch(err => {
+      console.log(err)
+    });
+  })
+
+  dispatch({ type: FETCH_SEARCH_RESULTS, payload: netflixResults });
 };
 // export const submitLogin = (values, history) => async dispatch => {
 //   const res = await axios.post('/api/surveys', values);
