@@ -26,7 +26,7 @@ const Navbar = () => {
   const history = useHistory();
 
   const onSubmit = () => {
-    history.push(`/search/?s=${searchValue}`);
+    history.push(`/search/?q=${searchValue}`);
   };
 
   return (
