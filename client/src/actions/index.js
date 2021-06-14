@@ -5,8 +5,8 @@ import {
   FETCH_LOCATION,
   FETCH_NEW_FLIX,
   FETCH_FLIX_INFO,
-  FETCH_FLIX_ID,
-  FETCH_SEARCH_RESULTS
+  FETCH_NETFLIX,
+  FETCH_IMDB,
 } from "./types";
 
 // Redux thunk inspects the value returned by this action creator
@@ -61,40 +61,38 @@ export const fetchFlixInfo = (id) => async (dispatch) => {
   dispatch({ type: FETCH_FLIX_INFO, payload: flixInfo["data"]["RESULT"] });
 };
 
-export const fetchResults = (title) => async (dispatch) => {
-  let imdbResults;
-  let netflixResults;
-  try {
-    imdbResults = await axios({
-      method: "GET",
-      url: `http://www.omdbapi.com/?apikey=${process.env.REACT_APP_OMDB_API_KEY}&s=${title}`,
-    }).then((res) => {
-      console.log(res.data.Search)
-      return res.data.Search;
-    });
-  } catch (err) {
-    console.log(err);
-  }
+export const fetchImdbResults = (title) => async (dispatch) => {
+  const imdbResults = await axios({
+    method: "GET",
+    url: `http://www.omdbapi.com/?apikey=${process.env.REACT_APP_OMDB_API_KEY}&s=${title}`,
+  }).then((res) => {
+    return res.data.Search;
+  });
 
-  imdbResults.forEach(result => {
-    axios.get(`https://unogs-unogs-v1.p.rapidapi.com/aaapi.cgi?t=loadvideo&q=${result.imdbID}`,{
-      headers: {
-        "x-rapidapi-key": `${process.env.REACT_APP_UNOGS_API_KEY}`,
-        "x-rapidapi-host": "unogs-unogs-v1.p.rapidapi.com",
+  dispatch({ type: FETCH_IMDB, payload: imdbResults });
+};
+
+export const fetchNetflixResults = () => async (dispatch) => {
+  const netflixResults = await axios
+    .get(
+      `https://unogs-unogs-v1.p.rapidapi.com/aaapi.cgi?t=loadvideo&q=tt0118928`,
+      {
+        headers: {
+          "x-rapidapi-key": `${process.env.REACT_APP_UNOGS_API_KEY}`,
+          "x-rapidapi-host": "unogs-unogs-v1.p.rapidapi.com",
+        },
+      }
+    )
+    .then((res) => {
+      if (res.data.RESULT) {
+        return res.data.RESULT;
       }
     })
-    .then(res => {
-      if (res) {
-        console.log(res.data.RESULT.nfinfo)
-        netflixResults.push(res)
-      }
-    })
-    .catch(err => {
-      console.log(err)
+    .catch((err) => {
+      console.error(err);
     });
-  })
 
-  dispatch({ type: FETCH_SEARCH_RESULTS, payload: netflixResults });
+  dispatch({ type: FETCH_NETFLIX, payload: netflixResults });
 };
 // export const submitLogin = (values, history) => async dispatch => {
 //   const res = await axios.post('/api/surveys', values);

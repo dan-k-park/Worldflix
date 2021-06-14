@@ -4,17 +4,20 @@ import * as actions from "../../actions";
 import FlixContainer from '../../containers/FlixContainer';
 
 
-const SearchResults = ({ match, location, fetchFlixInfo, fetchResults, imdbResults }) => {
+const SearchResults = ({ match, location, fetchFlixInfo, fetchImdbResults, fetchNetflixResults, imdbResults }) => {
 
   const [searchResults, setSearchResults] = useState([])
+  const [searchTitle, setSearchTitle] = useState('')
 
   useEffect(() => {
     const title = new URLSearchParams(location.search).get('q')
-    fetchResults(title)
-    imdbResults.forEach(title => {
-      let result = fetchFlixInfo(title.imdbID)
-      setSearchResults([...searchResults, result])
-    })
+    setSearchTitle(title)
+  },[])
+
+  useEffect(() => {
+    (async () => {
+      const imdbResults = await fetchImdbResults(searchTitle)
+    })()
   },[])
 
   return (
