@@ -10,7 +10,7 @@ const Flix = ({ match, flix, fetchFlixInfo }) => {
 
   useEffect(() => {
     fetchFlixInfo(match["params"]["id"]);
-  }, [match, actions.fetchNewFlix]);
+  }, [flix]);
 
   const getCountryFlags = () =>
     flix["country"].map((country) => {

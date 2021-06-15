@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Grid from '@material-ui/core/Grid';
 import FlixCard from '../components/FlixCard';
 import { useStyles } from "./styles";
 
 const FlixContainer = ({ flix }) => {
+  useEffect(() => {
+    console.log(flix[0])
+  },[flix])
   const classes = useStyles();
 
   const renderFlix = () => flix.map(flix => {

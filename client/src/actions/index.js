@@ -61,39 +61,6 @@ export const fetchFlixInfo = (id) => async (dispatch) => {
   dispatch({ type: FETCH_FLIX_INFO, payload: flixInfo["data"]["RESULT"] });
 };
 
-export const fetchImdbResults = (title) => async (dispatch) => {
-  const imdbResults = await axios({
-    method: "GET",
-    url: `http://www.omdbapi.com/?apikey=${process.env.REACT_APP_OMDB_API_KEY}&s=${title}`,
-  }).then((res) => {
-    return res.data.Search;
-  });
-
-  dispatch({ type: FETCH_IMDB, payload: imdbResults });
-};
-
-export const fetchNetflixResults = () => async (dispatch) => {
-  const netflixResults = await axios
-    .get(
-      `https://unogs-unogs-v1.p.rapidapi.com/aaapi.cgi?t=loadvideo&q=tt0118928`,
-      {
-        headers: {
-          "x-rapidapi-key": `${process.env.REACT_APP_UNOGS_API_KEY}`,
-          "x-rapidapi-host": "unogs-unogs-v1.p.rapidapi.com",
-        },
-      }
-    )
-    .then((res) => {
-      if (res.data.RESULT) {
-        return res.data.RESULT;
-      }
-    })
-    .catch((err) => {
-      console.error(err);
-    });
-
-  dispatch({ type: FETCH_NETFLIX, payload: netflixResults });
-};
 // export const submitLogin = (values, history) => async dispatch => {
 //   const res = await axios.post('/api/surveys', values);
 
