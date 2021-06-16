@@ -5,8 +5,6 @@ import {
   FETCH_LOCATION,
   FETCH_NEW_FLIX,
   FETCH_FLIX_INFO,
-  FETCH_NETFLIX,
-  FETCH_IMDB,
 } from "./types";
 
 // Redux thunk inspects the value returned by this action creator

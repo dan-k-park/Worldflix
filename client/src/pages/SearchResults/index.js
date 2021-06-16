@@ -56,7 +56,6 @@ const SearchResults = ({ match, location, fetchFlixInfo, imdbResults }) => {
         return data;
       });
       setSearchResults(netflixData)
-      console.log(searchResults)
     })();
   }, [location.search]);
 

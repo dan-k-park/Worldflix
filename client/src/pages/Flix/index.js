@@ -1,41 +1,62 @@
 import React, { useState, useEffect } from "react";
+import axios from 'axios';
 import getUnicodeFlagIcon from "country-flag-icons/unicode";
-import { connect } from "react-redux";
-import * as actions from "../../actions";
 import Paper from "@material-ui/core/Paper";
 import { useStyles } from "./styles";
 
-const Flix = ({ match, flix, fetchFlixInfo }) => {
+const Flix = ({ match }) => {
   const classes = useStyles();
 
+  const [flix, setFlix] = useState()
+  const [loaded, setLoaded] = useState(false)
+
   useEffect(() => {
-    fetchFlixInfo(match["params"]["id"]);
-  }, [flix]);
+      const fetchFlix = async () => {
+        const flixData = await axios({
+        method: "GET",
+        url: "https://unogs-unogs-v1.p.rapidapi.com/aaapi.cgi",
+        headers: {
+          "x-rapidapi-key": `${process.env.REACT_APP_UNOGS_API_KEY}`,
+          "x-rapidapi-host": "unogs-unogs-v1.p.rapidapi.com",
+        },
+        params: {
+          q: `${match["params"]["id"]}`,
+          t: "loadvideo",
+        },
+      })
+      .then(res => {
+        return res.data.RESULT
+      })
+      setFlix(flixData)
+    }
+    fetchFlix();
+  }, []);
+
+  useEffect(() => {
+    if (flix) {
+      console.log(flix)
+      setLoaded(true)
+    }
+  },[flix])
 
   const getCountryFlags = () =>
     flix["country"].map((country) => {
       return getUnicodeFlagIcon(country["ccode"].toUpperCase());
     });
+
   return (
     <>
-      <Paper className={classes.root}>
+    {loaded ? <Paper className={classes.root}>
         <div className={classes.paperContent}>
-          <img src={flix["nfinfo"]["image1"]} />
+          <img src={flix["nfinfo"]["image1"]}/>
           <div>
             <h1>{flix["nfinfo"]["title"]}</h1>
             <p>{flix["nfinfo"]["synopsis"]}</p>
           </div>
           {getCountryFlags()}
         </div>
-      </Paper>
+      </Paper>: null}
     </>
   );
 };
-
-function mapStateToProps({ flix }) {
-  return {
-    flix: flix["flixInfo"],
-  };
-}
-
-export default connect(mapStateToProps, actions)(Flix);
+export default Flix;
