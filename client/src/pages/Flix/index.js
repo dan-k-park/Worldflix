@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import getUnicodeFlagIcon from "country-flag-icons/unicode";
-import Paper from "@material-ui/core/Paper";
+import {IconButton, Paper} from "@material-ui/core";
+import AddCircleIcon from '@material-ui/icons/AddCircle';
 import { useStyles } from "./styles";
 
 const Flix = ({ match }) => {
@@ -51,6 +52,14 @@ const Flix = ({ match }) => {
           <div>
             <h1>{flix["nfinfo"]["title"]}</h1>
             <p>{flix["nfinfo"]["synopsis"]}</p>
+            <IconButton
+            edge="start"
+            color="inherit"
+            aria-label="home"
+            onClick={() => alert('clicked!')}
+          >
+            <AddCircleIcon fontSize="large" />
+          </IconButton>
           </div>
           {getCountryFlags()}
         </div>
