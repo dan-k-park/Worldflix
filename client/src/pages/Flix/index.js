@@ -34,7 +34,6 @@ const Flix = ({ match }) => {
 
   useEffect(() => {
     if (flix) {
-      console.log(flix)
       setLoaded(true)
     }
   },[flix])

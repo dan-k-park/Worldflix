@@ -28,12 +28,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 require('./routes/authRoutes')(app);
-// require('./routes/billingRoutes')(app);
-
-
-app.get('/', (req, res) => {
-    res.send({ bye: 'bud' })
-})
 
 const PORT = process.env.PORT || 5000
 app.listen(PORT)

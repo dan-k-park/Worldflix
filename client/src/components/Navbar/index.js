@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { connect } from 'react-redux';
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import SideDrawer from "../SideDrawer";
@@ -16,14 +17,16 @@ import TheatersIcon from "@material-ui/icons/Theaters";
 import SearchBar from "material-ui-search-bar";
 import { useStyles } from "./styles";
 
-const navLinks = [{ title: `Log In`, path: `/login` }];
-
-const Navbar = () => {
+const Navbar = ({ auth }) => {
   const classes = useStyles();
+  const history = useHistory();
 
   const [searchValue, setSearchValue] = useState("");
+  const [navLinks, setNavLinks] = useState([])
 
-  const history = useHistory();
+  useEffect(() => {
+    auth ? setNavLinks([{ title: `My List`, path: `/profile/${auth.googleId}`}, { title: `Log Out`, path: `/api/logout` }]) : setNavLinks([{ title: `Log In`, path: `/auth/google` }])
+  }, [auth])
 
   const onSubmit = () => {
     history.push(`/search/?q=${searchValue}`);
@@ -71,4 +74,8 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+function mapStateToProps({ auth }) {
+  return { auth } // identical key value pair { auth: auth } = { auth }
+}
+
+export default connect(mapStateToProps)(Navbar);

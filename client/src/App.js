@@ -5,12 +5,13 @@ import * as actions from "./actions";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Flix from "./pages/Flix";
+import Profile from "./pages/Profile";
 import SearchResults from "./pages/SearchResults";
 import { CssBaseline } from "@material-ui/core";
 
 class App extends Component {
   componentDidMount() {
-    // this.props.fetchUser();
+    this.props.fetchUser();
     this.props.getGeoInfo();
   }
 
@@ -29,6 +30,11 @@ class App extends Component {
           exact
           path="/search"
           render={(routerProps) => <SearchResults {...routerProps} />}
+        />
+        <Route
+          exact
+          path="/profile/:id"
+          render={(routerProps) => <Profile {...routerProps} />}
         />
       </Router>
     );
