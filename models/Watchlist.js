@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
-const watchlistFlixSchema = new Schema ({
+const watchlistSchema = new Schema ({
   netflixID: String,
   _user: { type: Schema.Types.ObjectId, ref: 'User' }
 });
 
-mongoose.model('watchlistFlixs', watchlistFlixSchema);
+mongoose.model('watchlists', watchlistSchema);

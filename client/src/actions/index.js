@@ -5,6 +5,7 @@ import {
   FETCH_LOCATION,
   FETCH_NEW_FLIX,
   FETCH_FLIX_INFO,
+  FETCH_WATCHLISTS
 } from "./types";
 
 // Redux thunk inspects the value returned by this action creator
@@ -59,9 +60,14 @@ export const fetchFlixInfo = (id) => async (dispatch) => {
   dispatch({ type: FETCH_FLIX_INFO, payload: flixInfo["data"]["RESULT"] });
 };
 
-// export const submitLogin = (values, history) => async dispatch => {
-//   const res = await axios.post('/api/surveys', values);
+export const fetchWatchlist = () => async (dispatch) => {
+  const res = await axios.get('/api/watchlists');
 
-//   history.push('/');
-//   dispatch({ type: FETCH_USER, payload: res.data })
-// }
+  dispatch({ type: FETCH_WATCHLISTS, payload: res.data })
+}
+
+export const newWatchlist = (netflixID) => async dispatch => {
+  const res = await axios.post('/api/watchlists', netflixID);
+
+  dispatch({ type: FETCH_USER, payload: res.data })
+}

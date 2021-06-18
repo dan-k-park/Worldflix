@@ -1,16 +1,33 @@
-import React, { useEffect } from 'react'
-import { connect } from 'react-redux';
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
+import { fetchWatchlist } from "../../actions";
 
-const Profile = ({ auth }) => {
+const Profile = ({ auth, watchlist }) => {
+  useEffect(() => {
+    fetchWatchlist();
+  });
+
+  const renderWatchlist = () => {
+    return watchlist.map(netflixID => {
+      return (
+        <p>netflixID</p>
+      )
+    })
+  }
+
   return (
     <div>
       <h1>Welcome back {auth ? auth.firstName : null}</h1>
+      {renderWatchlist()}
     </div>
-  )
+  );
+};
+
+function mapStateToProps({ auth, watchlist }) {
+  return {
+    auth,
+    watchlist,
+  };
 }
 
-function mapStateToProps({ auth }) {
-  return { auth } // identical key value pair { auth: auth } = { auth }
-}
-
-export default connect(mapStateToProps)(Profile);
+export default connect(mapStateToProps, { fetchWatchlist })(Profile);

@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
+import { connect } from 'react-redux';
+import { newWatchlist } from "../../actions";
 import axios from 'axios';
 import getUnicodeFlagIcon from "country-flag-icons/unicode";
 import {IconButton, Paper} from "@material-ui/core";
 import AddCircleIcon from '@material-ui/icons/AddCircle';
+import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
 import { useStyles } from "./styles";
 
-const Flix = ({ match }) => {
+const Flix = ({ match, newWatchlist }) => {
   const classes = useStyles();
 
   const [flix, setFlix] = useState()
@@ -56,7 +59,7 @@ const Flix = ({ match }) => {
             edge="start"
             color="inherit"
             aria-label="home"
-            onClick={() => alert('clicked!')}
+            onClick={() => newWatchlist(flix["nfinfo"]["netflixid"])}
           >
             <AddCircleIcon fontSize="large" />
           </IconButton>
@@ -67,4 +70,4 @@ const Flix = ({ match }) => {
     </>
   );
 };
-export default Flix;
+export default connect(null, { newWatchlist })(Flix);
