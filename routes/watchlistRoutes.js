@@ -19,12 +19,15 @@ module.exports = app => {
       _user: req.user.id,
     });
 
+    console.log(watchlist)
+
     try {
       await watchlist.save();
       const user = await req.user.save();
 
       res.send(user);
-    } catch {
+    } catch(err) {
+      console.error(err)
       res.status(422).send(err);
     }
   });

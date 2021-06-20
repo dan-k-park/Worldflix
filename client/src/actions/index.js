@@ -67,7 +67,7 @@ export const fetchWatchlist = () => async (dispatch) => {
 }
 
 export const newWatchlist = (netflixID) => async dispatch => {
-  const res = await axios.post('/api/watchlists', netflixID);
+  const res = await axios.post('/api/watchlists', {netflixID: netflixID});
 
   dispatch({ type: FETCH_USER, payload: res.data })
 }
