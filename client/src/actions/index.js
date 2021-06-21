@@ -43,7 +43,7 @@ export const fetchNewFlix = (country) => async (dispatch) => {
   dispatch({ type: FETCH_NEW_FLIX, payload: newFlix });
 };
 
-// Figure out why this doesn't work
+
 export const fetchFlixInfo = (id) => async (dispatch) => {
   const flixInfo = await axios({
     method: "GET",
@@ -61,13 +61,14 @@ export const fetchFlixInfo = (id) => async (dispatch) => {
 };
 
 export const fetchWatchlist = () => async (dispatch) => {
-  const res = await axios.get('/api/watchlists');
+  const res = await axios.get('/api/watchlists')
 
   dispatch({ type: FETCH_WATCHLISTS, payload: res.data })
 }
 
-export const newWatchlist = (netflixID) => async dispatch => {
-  const res = await axios.post('/api/watchlists', {netflixID: netflixID});
-
+export const newWatchlist = flix => async dispatch => {
+  console.log(flix)
+  const res = await axios.post('/api/watchlists', {flixInfo: flix});
+  
   dispatch({ type: FETCH_USER, payload: res.data })
 }

@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const watchlistSchema = new Schema ({
-  netflixID: String,
+  flixInfo: Object,
   _user: { type: Schema.Types.ObjectId, ref: 'User' }
 });
 

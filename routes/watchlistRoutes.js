@@ -6,20 +6,18 @@ const Watchlist = mongoose.model('watchlists');
 module.exports = app => {
   app.get('/api/watchlists', requireLogin, async (req, res) => {
     const watchlist = await Watchlist.find({ _user: req.user.id })
-
     res.send(watchlist);
   });
 
+  // CHANGE THIS SO THAT FLIX INFO IS REQ.BODY FOR DOCUMENT CREATION
   app.post('/api/watchlists', requireLogin, async (req, res) => {
-    const { netflixID } = req.body;
+    const { flix } = req.body;
 
     const watchlist = new Watchlist({
       // key and values title: title are identical
       netflixID,
       _user: req.user.id,
     });
-
-    console.log(watchlist)
 
     try {
       await watchlist.save();

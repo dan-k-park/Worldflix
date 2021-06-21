@@ -59,7 +59,7 @@ const Flix = ({ match, newWatchlist }) => {
             edge="start"
             color="inherit"
             aria-label="home"
-            onClick={() => newWatchlist(flix["nfinfo"]["netflixid"])}
+            onClick={() => newWatchlist(flix)}
           >
             <AddCircleIcon fontSize="large" />
           </IconButton>

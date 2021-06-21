@@ -2,7 +2,7 @@ import { FETCH_NEW_FLIX, FETCH_FLIX_INFO, FETCH_WATCHLISTS } from '../actions/ty
 
 const initalState = {
   newFlix: [],
-  watchlist: [],
+  watchlistIDs: [],
   flixInfo: {},
 }
 
@@ -12,7 +12,7 @@ export default function(state = initalState, action) {
     case FETCH_NEW_FLIX:
       return {...state, newFlix: [...action.payload]};
     case FETCH_WATCHLISTS:
-      return {...state, watchlist: [...action.payload]};
+      return {...state, watchlistIDs: [...action.payload]};
     case FETCH_FLIX_INFO:
       return {...state, flixInfo: action.payload}
     default:

@@ -20,11 +20,11 @@ const Home = ({ name, code, newFlix, fetchNewFlix }) => {
   )
 }
 
-function mapStateToProps(state) {
+function mapStateToProps({ country, flix }) {
   return { 
-    code: state.country.code,
-    name: state.country.name,
-    newFlix: state.flix.newFlix 
+    code: country.code,
+    name: country.name,
+    newFlix: flix.newFlix 
   };
 }
 
