@@ -1,32 +1,25 @@
 import React, { useState, useEffect } from "react";
-import FlixContainer from '../../containers/FlixContainer';
+import FlixContainer from "../../containers/FlixContainer";
 import { connect } from "react-redux";
-import { api } from '../../services/api';
 import { fetchWatchlist } from "../../actions";
 
 const Profile = ({ auth, fetchWatchlist, watchlist }) => {
 
+  const [test, setTest] = useState([])
+
   useEffect(() => {
     fetchWatchlist();
   },[]);
-  
-  useEffect(() => {
-    // (async () => {
-    //   const netflixData = await api.getData(watchlistIDs).then((data) => {
-    //     data = data.filter((element) => {
-    //       return element !== undefined;
-    //     });
-    //     return data;
-    //   });
-    //   setSearchResults(netflixData)
-    // })();
-    console.log(watchlist)
-  }, [watchlist])
 
+  useEffect(() => {
+    setTest(watchlist.map(flix => {
+      return flix.flixInfo
+    }))
+  }, [watchlist])
   return (
     <div>
       <h1>Welcome back {auth ? auth.firstName : null}</h1>
-      <FlixContainer flix={watchlist}/> 
+      {test ? <FlixContainer flix={test} /> : null}
     </div>
   );
 };

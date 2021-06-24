@@ -62,13 +62,12 @@ export const fetchFlixInfo = (id) => async (dispatch) => {
 
 export const fetchWatchlist = () => async (dispatch) => {
   const res = await axios.get('/api/watchlists')
-
   dispatch({ type: FETCH_WATCHLISTS, payload: res.data })
 }
 
 export const newWatchlist = flix => async dispatch => {
   console.log(flix)
   const res = await axios.post('/api/watchlists', {flixInfo: flix});
-  
+
   dispatch({ type: FETCH_USER, payload: res.data })
 }
