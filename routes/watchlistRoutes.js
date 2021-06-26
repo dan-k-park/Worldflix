@@ -17,9 +17,16 @@ module.exports = app => {
       _user: req.user.id,
     });
 
-    try {
-      await watchlist.save();
-      const user = await req.user.save();
+
+    
+    try {    
+      const existingWatchlist = await Watchlist.findOne({ _user: req.user.id, flixInfo })
+      const user = await req.user
+      
+      if (!existingWatchlist) {
+        await watchlist.save();
+        user.save()
+      }
 
       res.send(user);
     } catch(err) {
