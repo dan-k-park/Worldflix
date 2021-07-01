@@ -1,22 +1,23 @@
 import React, { useState, useEffect } from "react";
-import { connect } from 'react-redux';
-import { newWatchlist } from "../../actions";
-import axios from 'axios';
+import { connect } from "react-redux";
+import { newWatchlist, deleteWatchlist } from "../../actions";
+import axios from "axios";
 import getUnicodeFlagIcon from "country-flag-icons/unicode";
-import {IconButton, Paper} from "@material-ui/core";
-import AddCircleIcon from '@material-ui/icons/AddCircle';
-import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
+import { IconButton, Paper } from "@material-ui/core";
+import AddCircleIcon from "@material-ui/icons/AddCircle";
+import RemoveCircleIcon from "@material-ui/icons/RemoveCircle";
 import { useStyles } from "./styles";
 
-const Flix = ({ match, newWatchlist }) => {
+const Flix = ({ match, newWatchlist, deleteWatchlist, watchlist }) => {
   const classes = useStyles();
 
-  const [flix, setFlix] = useState()
-  const [loaded, setLoaded] = useState(false)
+  const [flix, setFlix] = useState();
+  const [loaded, setLoaded] = useState(false);
+  const [isAdded, setIsAdded] = useState(false);
 
   useEffect(() => {
-      const fetchFlix = async () => {
-        const flixData = await axios({
+    const fetchFlix = async () => {
+      const flixData = await axios({
         method: "GET",
         url: "https://unogs-unogs-v1.p.rapidapi.com/aaapi.cgi",
         headers: {
@@ -27,20 +28,31 @@ const Flix = ({ match, newWatchlist }) => {
           q: `${match["params"]["id"]}`,
           t: "loadvideo",
         },
-      })
-      .then(res => {
-        return res.data.RESULT
-      })
-      setFlix(flixData)
-    }
+      }).then((res) => {
+        console.log(res.data.RESULT);
+        checkWatchlist(res.data.RESULT.nfinfo.netflixid);
+        return res.data.RESULT;
+      });
+      setFlix(flixData);
+    };
     fetchFlix();
   }, []);
 
   useEffect(() => {
     if (flix) {
-      setLoaded(true)
+      setLoaded(true);
     }
-  },[flix])
+  }, [flix]);
+
+  const checkWatchlist = (id) => {
+    watchlist.forEach((listItem) => {
+      listItem.netflixid == id ? setIsAdded(true) : setIsAdded(false);
+    });
+  };
+
+  const toggleIsAdded = () => {
+    setIsAdded(!isAdded)
+  }
 
   const getCountryFlags = () =>
     flix["country"].map((country) => {
@@ -49,25 +61,46 @@ const Flix = ({ match, newWatchlist }) => {
 
   return (
     <>
-    {loaded ? <Paper className={classes.root}>
-        <div className={classes.paperContent}>
-          <img src={flix["nfinfo"]["image1"]}/>
-          <div>
-            <h1>{flix["nfinfo"]["title"]}</h1>
-            <p>{flix["nfinfo"]["synopsis"]}</p>
-            <IconButton
-            edge="start"
-            color="inherit"
-            aria-label="home"
-            onClick={() => newWatchlist(flix.nfinfo)}
-          >
-            <AddCircleIcon fontSize="large" />
-          </IconButton>
+      {loaded ? (
+        <Paper className={classes.root}>
+          <div className={classes.paperContent}>
+            <img src={flix["nfinfo"]["image1"]} />
+            <div>
+              <h1>{flix["nfinfo"]["title"]}</h1>
+              <p>{flix["nfinfo"]["synopsis"]}</p>
+
+              {isAdded ? (
+                <IconButton
+                  edge="start"
+                  color="inherit"
+                  aria-label="home"
+                  onClick={() => alert('Clicked delete!')}
+                >
+                  <RemoveCircleIcon fontSize="large" />
+                </IconButton>
+              ) : (
+                <IconButton
+                  edge="start"
+                  color="inherit"
+                  aria-label="home"
+                  onClick={() => newWatchlist(flix.nfinfo)}
+                >
+                  <AddCircleIcon fontSize="large" />
+                </IconButton>
+              )}
+            </div>
+            {getCountryFlags()}
           </div>
-          {getCountryFlags()}
-        </div>
-      </Paper>: null}
+        </Paper>
+      ) : null}
     </>
   );
 };
-export default connect(null, { newWatchlist })(Flix);
+
+function mapStateToProps({ flix }) {
+  return {
+    watchlist: flix.watchlist,
+  };
+}
+
+export default connect(mapStateToProps, { newWatchlist, deleteWatchlist })(Flix);

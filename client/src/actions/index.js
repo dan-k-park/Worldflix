@@ -69,8 +69,13 @@ export const fetchWatchlist = () => async (dispatch) => {
 }
 
 export const newWatchlist = flix => async dispatch => {
-  console.log(flix)
   const res = await axios.post('/api/watchlists', {flixInfo: flix});
+
+  dispatch({ type: FETCH_USER, payload: res.data })
+}
+
+export const deleteWatchlist = flixId => async dispatch => {
+  const res = await axios.delete(`/api/watchlist/${flixId}`, { flixId });
 
   dispatch({ type: FETCH_USER, payload: res.data })
 }

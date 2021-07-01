@@ -34,4 +34,8 @@ module.exports = app => {
       res.status(422).send(err);
     }
   });
+
+  app.delete('/api/watchlists/:watchlistId', requireLogin, async (req, res) => {
+    console.log()
+  })
 };

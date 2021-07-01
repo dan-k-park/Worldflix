@@ -13,6 +13,7 @@ class App extends Component {
   componentDidMount() {
     this.props.fetchUser();
     this.props.getGeoInfo();
+    this.props.fetchWatchlist();
   }
 
   render() {
