@@ -29,7 +29,6 @@ const Flix = ({ match, newWatchlist, deleteWatchlist, watchlist }) => {
           t: "loadvideo",
         },
       }).then((res) => {
-        console.log(res.data.RESULT);
         checkWatchlist(res.data.RESULT.nfinfo.netflixid);
         return res.data.RESULT;
       });
@@ -74,7 +73,7 @@ const Flix = ({ match, newWatchlist, deleteWatchlist, watchlist }) => {
                   edge="start"
                   color="inherit"
                   aria-label="home"
-                  onClick={() => alert('Clicked delete!')}
+                  onClick={() => deleteWatchlist(flix.nfinfo.netflixid)}
                 >
                   <RemoveCircleIcon fontSize="large" />
                 </IconButton>

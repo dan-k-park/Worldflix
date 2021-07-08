@@ -35,7 +35,8 @@ module.exports = app => {
     }
   });
 
-  app.delete('/api/watchlists/:watchlistId', requireLogin, async (req, res) => {
-    console.log()
+  app.delete('/api/watchlists/', requireLogin, async (req, res) => {
+    const { flixId } = req.body
+    console.log(flixId)
   })
 };
